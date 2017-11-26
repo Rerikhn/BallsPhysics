@@ -36,4 +36,17 @@
         android:text="@string/switch_agarIO"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_start" />
+
+    <CheckBox
+        android:id="@+id/checkBox_revese"
+        android:layout_width="128dp"
+        android:layout_height="43dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="144dp"
+        android:text="@string/switch_colors"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_start" />
+
 </android.support.constraint.ConstraintLayout>

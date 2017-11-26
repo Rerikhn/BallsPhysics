@@ -2,9 +2,8 @@ package com.example.ballsphysics.BallSource;
 
 import android.content.Context;
 import android.graphics.*;
-import android.view.Display;
 import android.view.View;
-
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -27,7 +26,7 @@ public class Ball extends View {
     /**
      * Color by ARGB [0; 255];
      */
-    private int a; //transparency 0 - full transparent, 250 - non transparent
+    private int transp; //transparency 0 - full transparent, 250 - non transparent
     private int red;
     private int green;
     private int blue;
@@ -35,11 +34,11 @@ public class Ball extends View {
 
     public Ball(Context context) {
         super(context);
-        radius = ((r.nextFloat() * (80 - 5) + 5));
+        radius = ((r.nextFloat() * (70 - 3) + 3));
         /** Main constructor of balls
          *  Randomize Vector's and color for each */
-        velocity = new Vector2d((r.nextFloat() * (5f - 0.1f) + 0.1f),
-                (r.nextFloat() * (5f - 0.1f) + 0.1f));
+        velocity = new Vector2d((r.nextFloat() * (4f - 0.1f) + 0.1f),
+                (r.nextFloat() * (4f - 0.1f) + 0.1f));
         position = new Vector2d((r.nextInt(BOX_WIDTH/2)), (r.nextInt(BOX_HEIGHT/2))
                 /*(r.nextInt() * ((BOX_WIDTH - radius) - BOX_WIDTH / 2) + BOX_WIDTH / 2),
                 (r.nextInt() * ((BOX_HEIGHT - radius) - BOX_HEIGHT / 2) + BOX_HEIGHT / 2)*/);
@@ -48,19 +47,17 @@ public class Ball extends View {
         /**
          * Randomize colors and transparency
          */
-        a = (r.nextInt() * (255 - 100) + 100);
-        red = r.nextInt(255);
-        green = r.nextInt(255);
-        blue = r.nextInt(255);
-
-        ballColor = new Paint();
-        ballColor.setARGB(a, red, green, blue);
+        transp = (r.nextInt() * (255 - 100) + 150);
+        red = r.nextInt(254);
+        green = r.nextInt(254);
+        blue = r.nextInt(254);
 
     }
 
-
     public void paint(Canvas canvas) {
         canvas.drawColor(Color.TRANSPARENT);
+        ballColor = new Paint();
+        ballColor.setARGB(transp, red, green, blue);
         canvas.drawCircle(position.getX(), position.getY(), radius, ballColor);
     }
 
@@ -115,8 +112,8 @@ public class Ball extends View {
         return false;
     }
 
-    public void resolveCollision(Ball ball/*, boolean truth*/) {
-        //if (truth == true) {
+    public void resolveCollision(Ball ball, boolean truth) {
+        if (truth == true) {
             // get the mtd
             Vector2d delta = (position.subtract(ball.position));
             float r = getRadius() + ball.getRadius();
@@ -160,7 +157,55 @@ public class Ball extends View {
             // change in momentum
             this.velocity = this.velocity.add(impulse.multiply(mass1));
             ball.velocity = ball.velocity.subtract(impulse.multiply(mass2));
-       // }
+       }
     }
 
+    public int getRed() {
+        return red;
+    }
+
+    public int getGreen() {
+        return green;
+    }
+
+    public int getBlue() {
+        return blue;
+    }
+
+    public int getTransp() {
+        return  transp;
+    }
+
+    public void setARGB (int t, int r, int g, int b) {
+        this.transp = t;
+        this.red = r;
+        this.green = g;
+        this.blue = b;
+    }
+
+    public void eatSmall(Ball ball, int j, int i, ArrayList<Ball> temp, boolean t) {
+        if (t == true) {
+            if (getRadius() > ball.getRadius()) {
+                setRadius(getRadius() + ball.getRadius() / 5);
+                temp.remove(j);
+            } else {
+                ball.setRadius(ball.getRadius() + getRadius() / 5);
+                temp.remove(i);
+            }
+            if (getRadius() >= 200) temp.remove(i);
+            if (ball.getRadius() >= 200) temp.remove(j);
+        }
+    }
+
+    public void reverseColor(Ball b1, boolean b) {
+        if (b == true) {
+            int ab1, rb1, gb1, bb1;
+            ab1 = b1.getTransp();
+            rb1 = b1.getRed();
+            gb1 = b1.getGreen();
+            bb1 = b1.getBlue();
+            b1.setARGB(this.getTransp(), this.getRed(), this.getGreen(), this.getBlue());
+            this.setARGB(ab1,rb1, gb1, bb1);
+        }
+    }
 }

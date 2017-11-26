@@ -3,6 +3,7 @@
     <string name="app_start">Start</string>
     <string name="switch_collide">Collide</string>
     <string name="switch_agarIO">Agar IO</string>
+    <string name="switch_colors">Reverse colors</string>
 
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
