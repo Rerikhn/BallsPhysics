@@ -2,20 +2,20 @@ package com.example.ballsphysics.BallSource;
 
 import android.content.Context;
 import android.graphics.*;
+import android.util.DisplayMetrics;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
+/*
  * Created by Nikita on 26.11.2017.
  */
 
 public class Ball extends View {
 
-    private final int BOX_WIDTH = 720;
-    private final int BOX_HEIGHT = 1260;
+    private int BOX_WIDTH;
+    private int BOX_HEIGHT;
 
-    private Random r = new Random();
     /**
      * For Vectors
      */
@@ -30,12 +30,15 @@ public class Ball extends View {
     private int red;
     private int green;
     private int blue;
-    private Paint ballColor;
 
     public Ball(Context context) {
         super(context);
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        BOX_WIDTH = metrics.widthPixels;
+        BOX_HEIGHT = metrics.heightPixels;
+        Random r = new Random();
         radius = ((r.nextFloat() * (70 - 3) + 3));
-        /** Main constructor of balls
+        /* Main constructor of balls
          *  Randomize Vector's and color for each */
         velocity = new Vector2d((r.nextFloat() * (4f - 0.1f) + 0.1f),
                 (r.nextFloat() * (4f - 0.1f) + 0.1f));
@@ -44,7 +47,7 @@ public class Ball extends View {
                 (r.nextInt() * ((BOX_HEIGHT - radius) - BOX_HEIGHT / 2) + BOX_HEIGHT / 2)*/);
         mass = radius * Constants.pi;
 
-        /**
+        /*
          * Randomize colors and transparency
          */
         transp = (r.nextInt() * (255 - 100) + 150);
@@ -56,7 +59,7 @@ public class Ball extends View {
 
     public void paint(Canvas canvas) {
         canvas.drawColor(Color.TRANSPARENT);
-        ballColor = new Paint();
+        Paint ballColor = new Paint();
         ballColor.setARGB(transp, red, green, blue);
         canvas.drawCircle(position.getX(), position.getY(), radius, ballColor);
     }
@@ -74,7 +77,7 @@ public class Ball extends View {
     }
 
     public void movePhysics() {
-        /**
+        /*
          * Move the ball normally by X-axis and Y-axis
          * */
         position.set(position.getX() + velocity.getX(),
@@ -106,14 +109,11 @@ public class Ball extends View {
 
         float distSqr = (xd * xd) + (yd * yd);
 
-        if (distSqr <= sqrRadius) {
-            return true;
-        }
-        return false;
+        return distSqr <= sqrRadius;
     }
 
     public void resolveCollision(Ball ball, boolean truth) {
-        if (truth == true) {
+        if (truth) {
             // get the mtd
             Vector2d delta = (position.subtract(ball.position));
             float r = getRadius() + ball.getRadius();
@@ -184,7 +184,7 @@ public class Ball extends View {
     }
 
     public void eatSmall(Ball ball, int j, int i, ArrayList<Ball> temp, boolean t) {
-        if (t == true) {
+        if (t) {
             if (getRadius() > ball.getRadius()) {
                 setRadius(getRadius() + ball.getRadius() / 5);
                 temp.remove(j);
@@ -198,7 +198,7 @@ public class Ball extends View {
     }
 
     public void reverseColor(Ball b1, boolean b) {
-        if (b == true) {
+        if (b) {
             int ab1, rb1, gb1, bb1;
             ab1 = b1.getTransp();
             rb1 = b1.getRed();

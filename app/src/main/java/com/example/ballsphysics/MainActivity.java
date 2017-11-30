@@ -2,17 +2,14 @@ package com.example.ballsphysics;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.example.ballsphysics.BallSource.Ball;
 import com.example.ballsphysics.BallSource.BallsGame;
 
 public class MainActivity extends AppCompatActivity {
-    private boolean truthCollide = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

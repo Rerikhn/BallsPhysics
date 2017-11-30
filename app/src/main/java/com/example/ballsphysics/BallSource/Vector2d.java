@@ -1,83 +1,77 @@
 package com.example.ballsphysics.BallSource;
 
-/**
+/*
  * Created by Nikita on 26.11.2017.
  */
 
-public class Vector2d {
+class Vector2d {
 
     private float x;
     private float y;
 
-    public Vector2d() {
+    private Vector2d() {
         this.setX(0);
         this.setY(0);
     }
 
-    public Vector2d(float x, float y) {
+    Vector2d(float x, float y) {
         this.setX(x);
         this.setY(y);
     }
 
-    public void setX(float x) {
+    void setX(float x) {
         this.x = x;
     }
 
-    public float getX() {
+    float getX() {
         return x;
     }
 
-    public void setY(float y) {
+    void setY(float y) {
         this.y = y;
     }
 
-    public float getY() {
+    float getY() {
         return y;
     }
 
-    public void set(float x, float y) {
+    void set(float x, float y) {
         this.setX(x);
         this.setY(y);
     }
 
-    public float dot(Vector2d v2) {
-        float result = 0.0f;
+    float dot(Vector2d v2) {
+        float result;
         result = this.getX() * v2.getX() + this.getY() * v2.getY();
         return result;
     }
 
-    public float getLength() {
+    float getLength() {
         return (float) Math.sqrt(getX() * getX() + getY() * getY());
     }
 
-    public float getDistance(Vector2d v2) {
-        return (float) Math.sqrt((v2.getX() - getX())
-                * (v2.getX() - getX()) + (v2.getY() - getY())
-                * (v2.getY() - getY()));
-    }
-
-    public Vector2d add(Vector2d v2) {
+    Vector2d add(Vector2d v2) {
         Vector2d result = new Vector2d();
         result.setX(getX() + v2.getX());
         result.setY(getY() + v2.getY());
         return result;
     }
 
-    public Vector2d subtract(Vector2d v2) {
+    Vector2d subtract(Vector2d v2) {
         Vector2d result = new Vector2d();
         result.setX(this.getX() - v2.getX());
         result.setY(this.getY() - v2.getY());
         return result;
     }
 
-    public Vector2d multiply(float scaleFactor) {
+    Vector2d multiply(float scaleFactor) {
         Vector2d result = new Vector2d();
         result.setX(this.getX() * scaleFactor);
         result.setY(this.getY() * scaleFactor);
         return result;
     }
 
-    public Vector2d normalize() {
+    Vector2d normalize() {
         float len = getLength();
         if (len != 0.0f) {
             this.setX(this.getX() / len);
