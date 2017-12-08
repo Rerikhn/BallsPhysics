@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_back"
-    android:backgroundTint="#50FFFFFF"
+    android:background="#b2ebf2"
     android:backgroundTintMode="src_over"
     tools:context="com.example.ballsphysics.MainActivity">
 
     <Button
         android:id="@+id/button_start"
+
         android:layout_width="263dp"
         android:layout_height="52dp"
         android:text="@string/app_start"
@@ -28,6 +28,7 @@
         android:layout_marginTop="40dp"
         android:checked="false"
         android:text="@string/switch_collide"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_start" />
 
@@ -38,6 +39,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="92dp"
         android:text="@string/switch_agarIO"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_start" />
 

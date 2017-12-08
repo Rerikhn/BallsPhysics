@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.*;
 import android.util.DisplayMetrics;
 import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,10 +13,6 @@ import java.util.Random;
  */
 
 public class Ball extends View {
-
-    private int BOX_WIDTH;
-    private int BOX_HEIGHT;
-
     /**
      * For Vectors
      */
@@ -23,6 +20,7 @@ public class Ball extends View {
     private Vector2d position;
     private float radius;
     private float mass;
+    private Canvas canvas;
     /**
      * Color by ARGB [0; 255];
      */
@@ -30,19 +28,19 @@ public class Ball extends View {
     private int red;
     private int green;
     private int blue;
+    DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
 
     public Ball(Context context) {
         super(context);
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        BOX_WIDTH = metrics.widthPixels;
-        BOX_HEIGHT = metrics.heightPixels;
         Random r = new Random();
         radius = ((r.nextFloat() * (70 - 3) + 3));
         /* Main constructor of balls
          *  Randomize Vector's and color for each */
         velocity = new Vector2d((r.nextFloat() * (4f - 0.1f) + 0.1f),
                 (r.nextFloat() * (4f - 0.1f) + 0.1f));
-        position = new Vector2d((r.nextInt(BOX_WIDTH/2)), (r.nextInt(BOX_HEIGHT/2))
+        position = new Vector2d((r.nextInt(metrics.widthPixels / 2)),
+                (r.nextInt(metrics.heightPixels / 2))
                 /*(r.nextInt() * ((BOX_WIDTH - radius) - BOX_WIDTH / 2) + BOX_WIDTH / 2),
                 (r.nextInt() * ((BOX_HEIGHT - radius) - BOX_HEIGHT / 2) + BOX_HEIGHT / 2)*/);
         mass = radius * Constants.pi;
@@ -86,17 +84,17 @@ public class Ball extends View {
         if (position.getX() - radius < 0) {
             velocity.setX(-velocity.getX());
             position.setX(radius);
-        } else if (position.getX() + radius > BOX_WIDTH) {
+        } else if (position.getX() + radius > metrics.widthPixels) {
             velocity.setX(-velocity.getX()); // Reflect along normal
-            position.setX(BOX_WIDTH - radius);           // // Re-position the ball at the edge
+            position.setX(metrics.widthPixels - radius);           // // Re-position the ball at the edge
         }
 
         if (position.getY() - radius < 0) {
             velocity.setY(-velocity.getY());
             position.setY(radius);
-        } else if (position.getY() + radius > BOX_HEIGHT) {
+        } else if (position.getY() + radius > metrics.heightPixels) {
             velocity.setY(-velocity.getY()); // Reflect along normal
-            position.setY(BOX_HEIGHT - radius);
+            position.setY(metrics.heightPixels - radius);
         }
     }
 
@@ -157,7 +155,15 @@ public class Ball extends View {
             // change in momentum
             this.velocity = this.velocity.add(impulse.multiply(mass1));
             ball.velocity = ball.velocity.subtract(impulse.multiply(mass2));
-       }
+        }
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
     }
 
     public int getRed() {
@@ -173,10 +179,10 @@ public class Ball extends View {
     }
 
     public int getTransp() {
-        return  transp;
+        return transp;
     }
 
-    public void setARGB (int t, int r, int g, int b) {
+    public void setARGB(int t, int r, int g, int b) {
         this.transp = t;
         this.red = r;
         this.green = g;
@@ -205,7 +211,7 @@ public class Ball extends View {
             gb1 = b1.getGreen();
             bb1 = b1.getBlue();
             b1.setARGB(this.getTransp(), this.getRed(), this.getGreen(), this.getBlue());
-            this.setARGB(ab1,rb1, gb1, bb1);
+            this.setARGB(ab1, rb1, gb1, bb1);
         }
     }
 }

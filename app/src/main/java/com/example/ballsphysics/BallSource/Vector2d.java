@@ -4,7 +4,7 @@ package com.example.ballsphysics.BallSource;
  * Created by Nikita on 26.11.2017.
  */
 
-class Vector2d {
+public class Vector2d {
 
     private float x;
     private float y;

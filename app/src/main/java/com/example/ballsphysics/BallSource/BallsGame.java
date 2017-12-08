@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 
 public class BallsGame extends View {
+
     MediaPlayer bounce= MediaPlayer.create(this.getContext(), R.raw.bounce);
     // Draw frame per second
     private static int UPDATE_RATE = 120;
