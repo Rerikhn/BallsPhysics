@@ -58,7 +58,7 @@ public class Ball extends View {
     public void paint(Canvas canvas) {
         canvas.drawColor(Color.TRANSPARENT);
         Paint ballColor = new Paint();
-        ballcolor.setStyle(Paint.Style.STROKE);
+      //  ballcolor.setStyle(Paint.Style.STROKE);
         ballColor.setARGB(transp, red, green, blue);
         canvas.drawCircle(position.getX(), position.getY(), radius, ballColor);
     }
